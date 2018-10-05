@@ -1,65 +1,61 @@
 package facens.worthit.view.main;
 
-import android.net.Uri;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.FrameLayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import facens.worthit.helper.FragmentHelper;
-import facens.worthit.view.home.HomeFragment;
-import facens.worthit.view.account.AccountFragment;
 import facens.worthit.R;
+import facens.worthit.helper.FragmentHelper;
+import facens.worthit.view.account.AccountFragment;
+import facens.worthit.view.home.HomeFragment;
 
-public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, AccountFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
-    private FragmentHelper fragmentHelper;
+    private BottomNavigationView mBottomNavigationView;
+    private FrameLayout mMainFrame;
+    private FragmentHelper mFragmentHelper;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    fragmentHelper.navigate(0);
-                    return true;
-                case R.id.navigation_profile:
-                    fragmentHelper.navigate(1);
-                    return true;
-            }
-            return false;
-        }
-    };
-
+    protected ArrayList<Fragment> createFragments(){
+        return  new ArrayList<Fragment>() {{
+            add(new HomeFragment());
+            add(new AccountFragment());
+        }};
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fragmentHelper = new FragmentHelper(getSupportFragmentManager(), createFragments(),0);
-        fragmentHelper.commit();
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-    }
+        mMainFrame = (FrameLayout) findViewById(R.id.frame);
+        mBottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        mFragmentHelper = new FragmentHelper(getSupportFragmentManager(),createFragments(),0, R.id.frame);
+        mFragmentHelper.setFragment(0);
 
-    private List<Fragment> createFragments(){
-        return Arrays.asList(new HomeFragment(),new AccountFragment());
-    }
+        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.navigation_home:
+                        mFragmentHelper.setFragment(0);
+                        return true;
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
+                    case R.id.navigation_profile:
+                        mFragmentHelper.setFragment(1);
+                        return true;
+                    default:
+                        return false;
+                }
 
+            }
+
+        });
     }
 }

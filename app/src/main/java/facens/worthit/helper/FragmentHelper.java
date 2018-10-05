@@ -2,6 +2,7 @@ package facens.worthit.helper;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import java.util.List;
 
@@ -12,30 +13,22 @@ public class FragmentHelper {
     private FragmentManager mFragmentManager;
     private List<Fragment> mFragments;
     private Fragment active;
+    private int frameId;
 
-    public FragmentHelper(FragmentManager fragmentManager, List<Fragment> fragments, int activePosition){
+    public FragmentHelper(FragmentManager fragmentManager, List<Fragment> fragments, int activePosition, int frameId) {
 
-    mFragmentManager = fragmentManager;
-    mFragments = fragments;
-    active = fragments.get(activePosition);
-
+        mFragmentManager = fragmentManager;
+        mFragments = fragments;
+        active = fragments.get(activePosition);
+        this.frameId = frameId;
+        setFragment(activePosition);
     }
 
-    public void commit(){
-        for(int i = 0; i<mFragments.size();i++){
-            Fragment fragment = mFragments.get(i);
-            if(active.getId() == fragment.getId()){
-                mFragmentManager.beginTransaction().add(R.id.frame, fragment, String.valueOf(i)).commit();
-            }
-            else{
-                mFragmentManager.beginTransaction().add(R.id.frame, fragment, String.valueOf(i)).hide(fragment).commit();
-            }
-        }
+    public void setFragment(int fragmentPosition){
+        Fragment fragment = mFragments.get(fragmentPosition);
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.replace(frameId, fragment);
+        transaction.commit();
+        active = fragment;
     }
-
-    public void navigate(int position){
-        mFragmentManager.beginTransaction().hide(active).show(mFragments.get(position)).commit();
-        active = mFragments.get(position);
-    }
-
 }
