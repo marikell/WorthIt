@@ -1,4 +1,4 @@
-package facens.worthit.view.home;
+package facens.worthit.view.product;
 
 
 import android.os.Bundle;
@@ -27,35 +27,23 @@ import facens.worthit.model.UserOption;
 import facens.worthit.view.account.LoginFragment;
 import facens.worthit.view.account.ProfileFragment;
 import facens.worthit.view.product.ProductFragment;
-import facens.worthit.view.product.ReviewListFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class ProductFragment extends Fragment {
 
 
-    private FragmentHelper mFragmentHelper;
-    private FrameLayout mMainFrame;
-
-    public HomeFragment() {
+    public ProductFragment() {
+        // Required empty public constructor
     }
-
-    protected ArrayList<Fragment> createFragments(){
-        return  new ArrayList<Fragment>() {{
-            add(new ReviewListFragment());
-            add(new ProductFragment());
-        }};
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mFragmentHelper = new FragmentHelper(getFragmentManager(),createFragments(),0, R.id.frame_home);
-        mFragmentHelper.setFragment(0);
         return inflater.inflate(R.layout.fragment_home, container, false);
+
     }
 
 
