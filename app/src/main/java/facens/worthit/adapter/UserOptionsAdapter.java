@@ -1,57 +1,71 @@
 package facens.worthit.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.media.Image;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
+import facens.worthit.ImageType;
 import facens.worthit.R;
+import facens.worthit.model.UserOption;
 
-public class UserOptionsAdapter extends BaseAdapter{
+public class UserOptionsAdapter extends ArrayAdapter<UserOption>{
 
-    private final List<String> userOptions;
-    private final Activity activity;
+    private final LayoutInflater mInflater;
 
+    public UserOptionsAdapter(Context context, List<UserOption> userOptions){
+        super(context, android.R.layout.simple_list_item_1);
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        setData(userOptions);
+    }
 
-    public UserOptionsAdapter(List<String> userOptions, Activity activity) {
-        this.userOptions = userOptions;
-        this.activity = activity;
+    public void setData(List<UserOption> userOptions){
+        clear();
+        if(userOptions != null){
+            for(UserOption userOption: userOptions){
+                add(userOption);
+            }
+        }
     }
 
     @Override
-    public int getCount() {
-        return userOptions.size();
-    }
+    public View getView(int position, View convertView, ViewGroup parent){
 
-    @Override
-    public Object getItem(int i) {
-        return userOptions.get(i);
-    }
+        View view;
 
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
+        if (convertView == null) {
+            view = mInflater.inflate(R.layout.user_option, parent, false);
+        } else {
+            view = convertView;
+        }
 
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        View v = activity.getLayoutInflater().inflate(R.layout.fragment_profile, viewGroup, false);
+        UserOption userOption = getItem(position);
+        ((TextView)view.findViewById(R.id.txtUserOption)).setText(userOption.getOption());
 
-        String option = userOptions.get(i);
+        ImageType userImgType = userOption.getImageType();
 
-        //pegando as referencias da view.
+        int resID = 0;
 
-        //TextView txtUserOption = (TextView) view.findViewById(R.id.txtUserOption);
-
-        //ImageView iconUserOption = (ImageView) view.findViewById(R.id.txtUserOption);
-
-        //txtUserOption.setText(option);
-        //iconUserOption.setImageResource(R.drawable.user_icon);
+        switch(userImgType){
+            case MY_REVIEWS:
+                resID = R.drawable.ic_format_list_bulleted_black_24dp;
+                break;
+            case LOGOUT:
+                resID = R.drawable.ic_exit_to_app_black_24dp;
+                break;
+        }
+        ((ImageView)view.findViewById(R.id.imgUserOption)).setImageResource(resID);
 
         return view;
     }
