@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment {
             public boolean onQueryTextChange(String s) {
 
                 if(mAdapter != null){
-                    //mAdapter.getFilter().
+                    mAdapter.getFilter().filter(s);
                 }
                     return false;
             }

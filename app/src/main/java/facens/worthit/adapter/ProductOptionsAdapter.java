@@ -2,32 +2,37 @@ package facens.worthit.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Filterable;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import facens.worthit.ImageType;
 import facens.worthit.R;
 import facens.worthit.helper.WebHelper;
 import facens.worthit.model.ProductOption;
-import facens.worthit.model.UserOption;
 
-public class ProductOptionsAdapter  extends ArrayAdapter<ProductOption> implements Filterable {
+public class ProductOptionsAdapter  extends ArrayAdapter<ProductOption> {
 
     private final LayoutInflater mInflater;
     private WebHelper mWebHelper;
+    private ProductOptionFilter mFilter;
+    private List<ProductOption> mOriginals;
+    private List<ProductOption> mFiltered;
 
 
     public ProductOptionsAdapter(Context context, List<ProductOption> productOptions){
         super(context, android.R.layout.simple_list_item_1);
         mWebHelper = new WebHelper();
+        mOriginals = productOptions;
+        mFiltered = productOptions;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         setData(productOptions);
     }
@@ -39,6 +44,56 @@ public class ProductOptionsAdapter  extends ArrayAdapter<ProductOption> implemen
                 add(productOption);
             }
         }
+    }
+
+    class ProductOptionFilter extends Filter{
+
+
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            FilterResults results = new FilterResults();
+
+            if(charSequence != null && charSequence.length() > 0){
+                charSequence = charSequence.toString().toUpperCase();
+            }
+
+            List<ProductOption> filtered = new ArrayList<>();
+
+            for(int i = 0; i<mFiltered.size();i++){
+
+                if(mFiltered.get(i).getName().toUpperCase().contains(charSequence)){
+                    ProductOption productOption = mFiltered.get(i);
+                    ProductOption newProductOption = new ProductOption(productOption.getId(), productOption.getName(), productOption.getImage(), productOption.getPrice(), productOption.getRating());
+
+                    filtered.add(newProductOption);
+                }
+
+            }
+
+            results.count = filtered.size();
+            results.values = filtered;
+
+            return results;
+
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+
+            mOriginals = (List<ProductOption>)filterResults.values;
+            notifyDataSetChanged();
+            setData(mOriginals);
+
+        }
+    }
+
+    @NonNull
+    @Override
+    public Filter getFilter() {
+        if(mFilter == null){
+            mFilter = new ProductOptionFilter();
+        }
+        return mFilter;
     }
 
     @Override
