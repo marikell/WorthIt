@@ -53,8 +53,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mFragmentHelper = new FragmentHelper(getFragmentManager(),createFragments(),0, R.id.frame_home);
-        mFragmentHelper.setFragment(0);
+        mFragmentHelper = new FragmentHelper(getFragmentManager(),createFragments(),0, R.id.frame_home, false, "");
+        mFragmentHelper.setFragment(0, false, "");
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 

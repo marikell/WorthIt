@@ -18,10 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import facens.worthit.R;
+import facens.worthit.adapter.CategoryOptionsAdapter;
 import facens.worthit.adapter.ProductOptionsAdapter;
 import facens.worthit.adapter.UserOptionsAdapter;
 import facens.worthit.helper.DataHelper;
 import facens.worthit.helper.FragmentHelper;
+import facens.worthit.model.CategoryOption;
 import facens.worthit.model.ProductOption;
 import facens.worthit.model.UserOption;
 import facens.worthit.view.account.LoginFragment;
@@ -33,8 +35,10 @@ import facens.worthit.view.product.ProductFragment;
  */
 public class ProductFragment extends Fragment {
 
+    private DataHelper mDataHelper;
 
     public ProductFragment() {
+        mDataHelper = new DataHelper();
         // Required empty public constructor
     }
 
@@ -42,7 +46,19 @@ public class ProductFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.fragment_product, container, false);
+
+        ListView listView = (ListView) v.findViewById(R.id.list_category_product);
+
+        //Opções do usuário
+        List<CategoryOption> categoryOptions = mDataHelper.getCategoryOptions();
+
+        //Criando um adapter para a lista
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_list_item_1, userOptions);
+        CategoryOptionsAdapter adapter = new CategoryOptionsAdapter(getActivity().getBaseContext(),categoryOptions);
+
+        listView.setAdapter(adapter);
+        return v;
 
     }
 

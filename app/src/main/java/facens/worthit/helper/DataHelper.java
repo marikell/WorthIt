@@ -3,6 +3,7 @@ package facens.worthit.helper;
 import java.util.ArrayList;
 
 import facens.worthit.ImageType;
+import facens.worthit.model.CategoryOption;
 import facens.worthit.model.ProductOption;
 import facens.worthit.model.UserOption;
 
@@ -17,6 +18,16 @@ public class DataHelper {
             add(new UserOption("1", "Minhas Reviews", ImageType.MY_REVIEWS));
             add(new UserOption("2", "Logout", ImageType.LOGOUT));
         }};
+    }
+
+    public ArrayList<CategoryOption> getCategoryOptions(){
+       return new ArrayList<CategoryOption>(){
+           {
+                add(new CategoryOption("1","DESEMPENHO", 4));
+                add(new CategoryOption("2", "HARDWARE", 5));
+                add(new CategoryOption("3", "CUSTO",2));
+           }
+       };
     }
 
     public ArrayList<ProductOption> getProductOptions(){

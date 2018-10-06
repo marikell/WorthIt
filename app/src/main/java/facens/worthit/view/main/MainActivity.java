@@ -66,19 +66,19 @@ public class MainActivity extends AppCompatActivity {
 
         mMainFrame = (FrameLayout) findViewById(R.id.frame);
         mBottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-        mFragmentHelper = new FragmentHelper(getSupportFragmentManager(),createFragments(),0, R.id.frame);
-        mFragmentHelper.setFragment(0);
+        mFragmentHelper = new FragmentHelper(getSupportFragmentManager(),createFragments(),0, R.id.frame, false, "");
+        mFragmentHelper.setFragment(0,false, "");
 
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.navigation_home:
-                        mFragmentHelper.setFragment(0);
+                        mFragmentHelper.setFragment(0, false,"");
                         return true;
 
                     case R.id.navigation_profile:
-                        mFragmentHelper.setFragment(1);
+                        mFragmentHelper.setFragment(1,false,"");
                         return true;
                     default:
                         return false;

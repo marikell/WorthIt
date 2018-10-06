@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import facens.worthit.R;
@@ -33,6 +34,13 @@ public class ReviewListFragment extends Fragment {
     public ReviewListFragment() {
         // Required empty public constructor
         mDataHelper = new DataHelper();
+    }
+
+    protected ArrayList<Fragment> createFragments(){
+        return  new ArrayList<Fragment>() {{
+            add(new ReviewListFragment());
+            add(new ProductFragment());
+        }};
     }
 
     @Override
@@ -58,12 +66,10 @@ public class ReviewListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                //mFragmentHelper = new FragmentHelper(getFragmentManager(),createFragments(),0, R.id.frame_home);
-                //mFragmentHelper.setFragment(1);
-
+                mFragmentHelper = new FragmentHelper(getFragmentManager(),createFragments(),1, R.id.frame_home, true, "fragment_review_list");
+                mFragmentHelper.setFragment(1,false,"");
             }
         });
-
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

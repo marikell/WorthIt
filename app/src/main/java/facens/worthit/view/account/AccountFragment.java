@@ -40,8 +40,8 @@ public class AccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mDataHelper = new DataHelper();
-        mFragmentHelper = new FragmentHelper(getFragmentManager(),createFragments(),0, R.id.frame_account);
-        mFragmentHelper.setFragment(mDataHelper.isLoggedIn() ? 1 : 0);
+        mFragmentHelper = new FragmentHelper(getFragmentManager(),createFragments(),0, R.id.frame_account, false, "");
+        mFragmentHelper.setFragment(0, false, "");
         return inflater.inflate(R.layout.fragment_account, container, false);
     }
 }
