@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView mBottomNavigationView;
     private FrameLayout mMainFrame;
     private FragmentHelper mFragmentHelper;
-    private MaterialSearchView mSearchView;
     private android.support.v7.widget.Toolbar mToolbar;
 
     protected ArrayList<Fragment> createFragments(){

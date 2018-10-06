@@ -1,22 +1,18 @@
 package facens.worthit.view.account;
 
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import facens.worthit.ImageType;
 import facens.worthit.R;
 import facens.worthit.adapter.UserOptionsAdapter;
-import facens.worthit.helper.AccountHelper;
+import facens.worthit.helper.DataHelper;
 import facens.worthit.model.UserOption;
 
 /**
@@ -24,11 +20,11 @@ import facens.worthit.model.UserOption;
  */
 public class ProfileFragment extends Fragment {
 
-    private AccountHelper accountHelper;
+    private DataHelper mDataHelper;
 
     public ProfileFragment() {
         // Required empty public constructor
-        accountHelper = new AccountHelper();
+        mDataHelper = new DataHelper();
     }
 
 
@@ -46,7 +42,7 @@ public class ProfileFragment extends Fragment {
         ListView listView = (ListView) v.findViewById(R.id.listUserOptions);
 
         //Opções do usuário
-        List<UserOption> userOptions = accountHelper.getUserOptions();
+        List<UserOption> userOptions = mDataHelper.getUserOptions();
 
         //Criando um adapter para a lista
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_list_item_1, userOptions);

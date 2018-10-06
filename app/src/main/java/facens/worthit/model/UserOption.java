@@ -6,9 +6,9 @@ import facens.worthit.ImageType;
 
 public class UserOption {
 
-    private int id;
+    private String id;
 
-    public UserOption(int id, String option, ImageType imageType){
+    public UserOption(String id, String option, ImageType imageType){
         this.id = id;
         this.option = option;
         this.imageType = imageType;
@@ -28,11 +28,11 @@ public class UserOption {
 
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

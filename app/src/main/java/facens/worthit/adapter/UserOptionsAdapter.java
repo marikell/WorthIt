@@ -64,6 +64,9 @@ public class UserOptionsAdapter extends ArrayAdapter<UserOption>{
             case LOGOUT:
                 resID = R.drawable.ic_exit_to_app_black_24dp;
                 break;
+            case FAVORITES:
+                resID = R.drawable.ic_favorite_black_24dp;
+                break;
         }
         ((ImageView)view.findViewById(R.id.imgUserOption)).setImageResource(resID);
 
