@@ -66,7 +66,7 @@ public class ReviewListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                mFragmentHelper = new FragmentHelper(getFragmentManager(),createFragments(),1, R.id.frame_home, true, "fragment_review_list");
+                mFragmentHelper = new FragmentHelper(getFragmentManager(),createFragments(),1, R.id.frame_home, false, "");
             }
         });
 

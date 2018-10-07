@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
+
+<TextView
+    android:id="@+id/review_product_name_text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="15dp"
+    android:text="@string/product_name"
+    android:textAlignment="center"
+    android:textSize="30sp"
+    android:textStyle="bold" />
+
+<ImageView
+    android:id="@+id/product_image"
+    android:layout_width="140dp"
+    android:layout_height="140dp"
+    android:layout_gravity="center"
+    android:layout_marginBottom="20dp"
+    android:src="@drawable/asus" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/product_margin"
+    android:layout_marginRight="@dimen/product_margin"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/category_price"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>
+
+
+    <EditText
+    android:id="@+id/product_price_text"
+    android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textAlignment="center"
+    android:textSize="20sp"
+        android:inputType="numberDecimal"
+        android:ems="10"
+    android:layout_marginLeft="@dimen/product_margin"
+    android:layout_marginRight="@dimen/product_margin"
+    />
+
+<ListView
+
+    android:layout_marginTop="10dp"
+    android:id="@+id/list_category_product_review"
+    android:layout_marginLeft="@dimen/product_margin"
+    android:layout_marginRight="@dimen/product_margin"
+    android:layout_width="fill_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:scrollbarSize="3dp"
+    android:scrollbarStyle="insideOverlay"
+    android:scrollbars="vertical"
+    android:scrollingCache="true"
+    android:smoothScrollbar="true">
+
+</ListView>
+
+</LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

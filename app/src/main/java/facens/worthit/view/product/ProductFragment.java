@@ -42,10 +42,18 @@ public class ProductFragment extends Fragment {
     private FloatingActionButton addReviewButton, favoriteButton, moreButton;
     Animation fabOpen, fabClose, fabRClockWise, fabRAntiClockWise;
     private boolean isOpen = false;
+    private FragmentHelper mFragmentHelper;
 
     public ProductFragment() {
         mDataHelper = new DataHelper();
         // Required empty public constructor
+    }
+
+    protected ArrayList<Fragment> createFragments(){
+        return  new ArrayList<Fragment>() {{
+            add(new ProductFragment());
+            add(new ReviewFragment());
+        }};
     }
 
     @Override
@@ -64,6 +72,15 @@ public class ProductFragment extends Fragment {
         fabClose = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_close);
         fabRClockWise = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_clockwise);
         fabRAntiClockWise = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_anticlockwise);
+
+        addReviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mFragmentHelper = new FragmentHelper(getFragmentManager(),createFragments(),1, R.id.frame_home, false, "");
+
+            }
+        });
 
         moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
