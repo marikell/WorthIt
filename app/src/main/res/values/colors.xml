@@ -10,5 +10,6 @@
     <color name="colorToolbar">#f5f5f5</color>
     <color name="colorControlActivated">#006bc9</color>
     <color name="colorNavigationBar">#f5f5f5</color>
+    <color name="fab_heart_color">#c71e12</color>
 
 </resources>

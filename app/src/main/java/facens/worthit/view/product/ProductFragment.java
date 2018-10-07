@@ -2,6 +2,7 @@ package facens.worthit.view.product;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,6 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
@@ -36,6 +39,9 @@ import facens.worthit.view.product.ProductFragment;
 public class ProductFragment extends Fragment {
 
     private DataHelper mDataHelper;
+    private FloatingActionButton addReviewButton, favoriteButton, moreButton;
+    Animation fabOpen, fabClose, fabRClockWise, fabRAntiClockWise;
+    private boolean isOpen = false;
 
     public ProductFragment() {
         mDataHelper = new DataHelper();
@@ -49,6 +55,37 @@ public class ProductFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_product, container, false);
 
         ListView listView = (ListView) v.findViewById(R.id.list_category_product);
+
+        //Floating Buttons
+        moreButton = (FloatingActionButton) v.findViewById(R.id.more_button);
+        addReviewButton = (FloatingActionButton) v.findViewById(R.id.add_review);
+        favoriteButton = (FloatingActionButton) v.findViewById(R.id.like_button);
+        fabOpen = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_open);
+        fabClose = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_close);
+        fabRClockWise = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_clockwise);
+        fabRAntiClockWise = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_anticlockwise);
+
+        moreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isOpen){
+                    addReviewButton.startAnimation(fabClose);
+                    favoriteButton.startAnimation(fabClose);
+                    moreButton.startAnimation(fabRAntiClockWise);
+                    addReviewButton.setClickable(false);
+                    favoriteButton.setClickable(false);
+                    isOpen = false;
+                }
+                else{
+                    addReviewButton.startAnimation(fabOpen);
+                    favoriteButton.startAnimation(fabOpen);
+                    moreButton.startAnimation(fabRClockWise);
+                    addReviewButton.setClickable(true);
+                    favoriteButton.setClickable(true);
+                    isOpen = true;
+                }
+            }
+        });
 
         //Opções do usuário
         List<CategoryOption> categoryOptions = mDataHelper.getCategoryOptions();
