@@ -17,7 +17,7 @@
     </style>
 
     <style name="HomeSearchView">
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">15dp</item>
     </style>
 
     <style name="WorthIt" parent="Theme.AppCompat.Light" >
@@ -32,6 +32,13 @@
         <item name="toolbarStyle">@style/WorthItActionBar</item>
         <item name="coordinatorLayoutStyle">@style/Widget.Design.CoordinatorLayout</item>
     </style>
+
+
+    <style name="CustomRatingBar" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="colorAccent">@color/rating_bar</item>
+        <item name="android:colorControlNormal">@color/colorText</item>
+    </style>
+
 
     <style name="primaryButton">
         <item name="android:textColor">@color/colorBackground</item>

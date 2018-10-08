@@ -11,7 +11,7 @@
         android:id="@+id/product_category_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/category_01"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
@@ -19,9 +19,15 @@
 
     <RatingBar
         android:id="@+id/product_rating"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.75"
+        android:scaleY="0.75"
+        android:rating="3"
+        android:layout_gravity="center"
+        android:theme="@style/CustomRatingBar"
         android:isIndicator="true"
-        android:numStars="5"
-        android:layout_height="wrap_content" />
+        android:max="5" />
+
 
 </LinearLayout>

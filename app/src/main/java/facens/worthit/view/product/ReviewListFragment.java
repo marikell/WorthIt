@@ -18,6 +18,7 @@ import facens.worthit.R;
 import facens.worthit.adapter.ProductOptionsAdapter;
 import facens.worthit.helper.DataHelper;
 import facens.worthit.helper.FragmentHelper;
+import facens.worthit.interfaces.OnGetDataTaskCompleted;
 import facens.worthit.model.ProductOption;
 
 /**
@@ -51,16 +52,24 @@ public class ReviewListFragment extends Fragment {
 
         mSearchView = (SearchView) v.findViewById(R.id.searchView);
 
-        ListView listView = (ListView) v.findViewById(R.id.listReviews);
+        final ListView listView = (ListView) v.findViewById(R.id.listReviews);
+
 
         //Opções do usuário
-        List<ProductOption> productOptions = mDataHelper.getProductOptions();
+        mDataHelper.getProductOptions(getActivity(), new OnGetDataTaskCompleted() {
+            @Override
+            public void onTaskCompleted(ArrayList<ProductOption> list, boolean error, String message) {
 
-        //Criando um adapter para a lista
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_list_item_1, userOptions);
-        mAdapter = new ProductOptionsAdapter(getActivity().getBaseContext(),productOptions);
 
-        listView.setAdapter(mAdapter);
+                //Criando um adapter para a lista
+                //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_list_item_1, userOptions);
+                mAdapter = new ProductOptionsAdapter(getActivity().getBaseContext(),list);
+
+                listView.setAdapter(mAdapter);
+
+            }
+        });
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

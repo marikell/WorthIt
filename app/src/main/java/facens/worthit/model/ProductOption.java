@@ -28,7 +28,8 @@ public class ProductOption {
         this.id = id;
     }
     public String getPriceToString(){
-        return String.valueOf(price);
+        return "R$ " +
+                String.valueOf(price);
     }
 
     public String getName() {

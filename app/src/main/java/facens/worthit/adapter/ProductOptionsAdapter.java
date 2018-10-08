@@ -1,7 +1,9 @@
 package facens.worthit.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,10 +115,13 @@ public class ProductOptionsAdapter  extends ArrayAdapter<ProductOption> {
         ((TextView)view.findViewById(R.id.product_price)).setText(productOption.getPriceToString());
         ((RatingBar)view.findViewById(R.id.ratingBar)).setRating(productOption.getRating());
 
-        Drawable drawable = mWebHelper.LoadImageFromWebOperations(mWebHelper.getUrl().concat("img/" + productOption.getImage()));
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
-        if(drawable != null){
-            ((ImageView)view.findViewById(R.id.img_product)).setImageDrawable(drawable);
+        Bitmap bitmap = mWebHelper.LoadImageFromWebOperations(mWebHelper.getUrl().concat("img/" + productOption.getImage()));
+
+        if(bitmap != null){
+            ((ImageView)view.findViewById(R.id.img_product)).setImageBitmap(bitmap);
         }
         else{
             ((ImageView)view.findViewById(R.id.img_product)).setImageResource(R.drawable.asus);

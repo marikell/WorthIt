@@ -9,8 +9,8 @@
         android:id="@+id/img_product"
         android:layout_width="100dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/asus"
         android:contentDescription=""
+        android:layout_marginLeft="10dp"
         android:layout_height="100dp" />
 
     <LinearLayout
@@ -21,10 +21,11 @@
             android:id="@+id/product_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp"
             android:textStyle="bold"
             android:textColor="@color/colorText"
-            android:layout_gravity="top"
+            android:layout_gravity="center"
             android:textAlignment="center"
             android:text="@string/product_name"/>
 
@@ -33,7 +34,7 @@
             android:id="@+id/product_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:textStyle="bold"
             android:textColor="@color/colorAccent"
             android:textAlignment="center"
@@ -42,12 +43,15 @@
 
         <RatingBar
             android:id="@+id/ratingBar"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:rating="3"
+            android:theme="@style/CustomRatingBar"
             android:layout_gravity="center"
             android:isIndicator="true"
-            android:numStars="5"
-            android:rating="5" />
+            android:max="5" />
 
 
     </LinearLayout>
