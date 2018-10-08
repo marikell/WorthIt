@@ -26,7 +26,6 @@
         android:rating="3"
         android:theme="@style/CustomRatingBar"
         android:layout_gravity="center"
-        android:isIndicator="false"
         android:max="5" />
 
 

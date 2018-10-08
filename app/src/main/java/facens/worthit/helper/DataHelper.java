@@ -19,8 +19,10 @@ import java.util.ArrayList;
 
 import facens.worthit.ImageType;
 import facens.worthit.interfaces.OnGetDataTaskCompleted;
+import facens.worthit.interfaces.OnGetOnlyDataCompleted;
 import facens.worthit.model.CategoryOption;
 import facens.worthit.model.ProductOption;
+import facens.worthit.model.ReviewOption;
 import facens.worthit.model.UserOption;
 
 public class DataHelper {
@@ -36,6 +38,62 @@ public class DataHelper {
             add(new UserOption("1", "Minhas Reviews", ImageType.MY_REVIEWS));
             add(new UserOption("2", "Logout", ImageType.LOGOUT));
         }};
+    }
+
+    public void getReviewOption(Activity activity,String productId, final OnGetOnlyDataCompleted taskCompleted){
+
+    final ReviewOption reviewOption = new ReviewOption();
+
+
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+
+
+        WebHelper webHelper = new WebHelper();
+
+        String url = webHelper.getUrl() + "review/" + productId;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try{
+                    JSONArray productAttributes = response.getJSONArray("attributes");
+                    JSONObject productDesc = response.getJSONObject("data");
+
+                    reviewOption.setImage(productDesc.getString("image_id"));
+                    reviewOption.setProductId(productDesc.getString("product_id"));
+                    reviewOption.setPrice((float)productDesc.getDouble("cost"));
+                    reviewOption.setName(productDesc.getString("name"));
+
+                    ArrayList<String> attributes = new ArrayList<>();
+
+                    for (int i=0; i < productAttributes.length(); i++) {
+                        String attributeName =  productAttributes.get(i).toString();
+
+                        if(!attributeName.isEmpty()){
+
+                            attributes.add(attributeName);
+                        }
+                    }
+                    reviewOption.setAttributes(attributes);
+
+                    taskCompleted.onTaskCompleted(reviewOption,false,null);
+                }
+                catch(Exception ex){
+                    taskCompleted.onTaskCompleted(new ReviewOption(),true,ex.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                taskCompleted.onTaskCompleted(new ReviewOption(),true,error.getMessage());
+
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+
+
+
+
     }
 
     public void getCategoryOptions(Activity activity, final OnGetDataTaskCompleted taskCompleted, String productId){
