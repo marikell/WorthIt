@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -30,11 +31,14 @@ public class ReviewListFragment extends Fragment {
     private SearchView mSearchView;
     private FragmentHelper mFragmentHelper;
     private FrameLayout mMainFrame;
+    private ArrayList<ProductOption> allProducts;
     private ProductOptionsAdapter mAdapter;
+    private int page = 0;
 
     public ReviewListFragment() {
         // Required empty public constructor
         mDataHelper = new DataHelper();
+        allProducts = new ArrayList<>();
     }
 
     protected ArrayList<Fragment> createFragments(){
@@ -54,28 +58,66 @@ public class ReviewListFragment extends Fragment {
 
         final ListView listView = (ListView) v.findViewById(R.id.listReviews);
 
+        ((Button)v.findViewById(R.id.loadMore)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                page++;
+
+                mDataHelper.getProductOptions(getActivity(), new OnGetDataTaskCompleted<ProductOption>() {
+                    @Override
+                    public void onTaskCompleted(ArrayList<ProductOption> list, boolean error, String message) {
+
+                        allProducts.addAll(list);
+                        //Criando um adapter para a lista
+                        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_list_item_1, userOptions);
+                        mAdapter = new ProductOptionsAdapter(getActivity().getBaseContext(),allProducts);
+
+                        listView.setAdapter(mAdapter);
+
+                    }
+                },page);
+
+
+
+            }
+        });
+
 
         //Opções do usuário
-        mDataHelper.getProductOptions(getActivity(), new OnGetDataTaskCompleted() {
+        mDataHelper.getProductOptions(getActivity(), new OnGetDataTaskCompleted<ProductOption>() {
             @Override
             public void onTaskCompleted(ArrayList<ProductOption> list, boolean error, String message) {
 
-
+                allProducts.addAll(list);
                 //Criando um adapter para a lista
                 //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_list_item_1, userOptions);
-                mAdapter = new ProductOptionsAdapter(getActivity().getBaseContext(),list);
+                mAdapter = new ProductOptionsAdapter(getActivity().getBaseContext(),allProducts);
 
                 listView.setAdapter(mAdapter);
 
             }
-        });
+        },0);
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                mFragmentHelper = new FragmentHelper(getFragmentManager(),createFragments(),1, R.id.frame_home, false, "");
+                ProductOption productOption = (ProductOption) adapterView.getAdapter().getItem(i);
+
+                Bundle bundle = new Bundle();
+
+                bundle.putSerializable("product", productOption);
+                final ProductFragment productFragment = new ProductFragment();
+                productFragment.setArguments(bundle);
+
+                ArrayList<Fragment> fragments = new ArrayList<Fragment>() {{
+                    add(new ReviewListFragment());
+                    add(productFragment);
+                }};
+
+                mFragmentHelper = new FragmentHelper(getFragmentManager(),fragments,1, R.id.frame_home, false, "");
             }
         });
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import facens.worthit.R;
@@ -39,7 +40,9 @@ public class ReviewFragment extends Fragment {
         ListView listView = (ListView) v.findViewById(R.id.list_category_product_review);
 
         //Opções do usuário
-        List<CategoryOption> categoryOptions = mDataHelper.getCategoryOptions();
+        List<CategoryOption> categoryOptions = new ArrayList<>();
+
+                //mDataHelper.getCategoryOptions();
 
         //Criando um adapter para a lista
         CategoryOptionsAdapter adapter = new CategoryOptionsAdapter(getActivity().getBaseContext(),categoryOptions);

@@ -25,7 +25,7 @@ import facens.worthit.model.UserOption;
 
 public class DataHelper {
 
-    private final String url = "http://192.168.0.102:5000/";
+
 
    public boolean isLoggedIn(){
        return true;
@@ -38,22 +38,70 @@ public class DataHelper {
         }};
     }
 
-    public ArrayList<CategoryOption> getCategoryOptions(){
-       return new ArrayList<CategoryOption>(){
-           {
-                add(new CategoryOption("1","DESEMPENHO", 4));
-                add(new CategoryOption("2", "HARDWARE", 5));
-                add(new CategoryOption("3", "CUSTO",2));
-           }
-       };
+    public void getCategoryOptions(Activity activity, final OnGetDataTaskCompleted taskCompleted, String productId){
+
+       final ArrayList<CategoryOption> categoryOptions = new ArrayList<>();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+
+
+        WebHelper webHelper = new WebHelper();
+
+        String url = webHelper.getUrl() + "review/" + productId;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try{
+                    JSONArray productAttributes = response.getJSONArray("attributes");
+                    JSONObject productDesc = response.getJSONObject("data");
+
+                    for (int i=0; i < productAttributes.length(); i++) {
+                        String attributeName =  productAttributes.get(i).toString();
+
+                       if(!attributeName.isEmpty()){
+                           float rating = (float) productDesc.getDouble("attribute_" + Integer.toString((i+1)))/2;
+
+                           CategoryOption categoryOption = new CategoryOption(Integer.toString(i), attributeName.toUpperCase(),rating);
+                           categoryOptions.add(categoryOption);
+                       }
+
+                    }
+
+                    taskCompleted.onTaskCompleted(categoryOptions,false,null);
+                }
+                catch(Exception ex){
+                    taskCompleted.onTaskCompleted(categoryOptions,true,ex.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                taskCompleted.onTaskCompleted(new ArrayList<ProductOption>(),true,error.getMessage());
+
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+
     }
 
-    public void getProductOptions(Activity activity, final OnGetDataTaskCompleted taskCompleted){
+    public void getProductOptions(Activity activity, final OnGetDataTaskCompleted taskCompleted,int page){
 
         final ArrayList<ProductOption> productOptions = new ArrayList<>();
         RequestQueue requestQueue = Volley.newRequestQueue(activity);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url + "review", null, new Response.Listener<JSONObject>() {
+
+        WebHelper webHelper = new WebHelper();
+
+        String url = webHelper.getUrl() + "review";
+        if(page>0){
+
+            url += "?page="+page;
+
+        }
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                try{

@@ -1,6 +1,8 @@
 package facens.worthit.model;
 
-public class ProductOption {
+import java.io.Serializable;
+
+public class ProductOption implements Serializable{
 
     private String image;
 

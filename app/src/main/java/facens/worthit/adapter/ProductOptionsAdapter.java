@@ -115,7 +115,7 @@ public class ProductOptionsAdapter  extends ArrayAdapter<ProductOption> {
         ((TextView)view.findViewById(R.id.product_price)).setText(productOption.getPriceToString());
         ((RatingBar)view.findViewById(R.id.ratingBar)).setRating(productOption.getRating());
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         Bitmap bitmap = mWebHelper.LoadImageFromWebOperations(mWebHelper.getUrl().concat("img/" + productOption.getImage()));
@@ -123,9 +123,9 @@ public class ProductOptionsAdapter  extends ArrayAdapter<ProductOption> {
         if(bitmap != null){
             ((ImageView)view.findViewById(R.id.img_product)).setImageBitmap(bitmap);
         }
-        else{
+        else{*/
             ((ImageView)view.findViewById(R.id.img_product)).setImageResource(R.drawable.asus);
-        }
+       // }
 
         return view;
     }
