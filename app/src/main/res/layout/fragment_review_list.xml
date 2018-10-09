@@ -29,7 +29,10 @@
         android:id="@+id/loadMore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Carregar Mais" />
+        style="@style/secondaryButton"
+        android:fontFamily="@font/opensanscondbold"
+        android:text="Carregar Mais"
+        android:background="@drawable/botao_customizado"/>
 
 
 </LinearLayout>
