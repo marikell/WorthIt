@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         mFragmentHelper = new FragmentHelper(getFragmentManager(),createFragments(),0, R.id.frame_home, false, "");
-        mFragmentHelper.setFragment(0, false, "");
+        //FragmentHelper.setFragment(0, false, "");
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 

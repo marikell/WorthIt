@@ -1,7 +1,9 @@
 package facens.worthit.view.product;
 
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,8 +16,15 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +35,12 @@ import facens.worthit.adapter.ProductOptionsAdapter;
 import facens.worthit.adapter.UserOptionsAdapter;
 import facens.worthit.helper.DataHelper;
 import facens.worthit.helper.FragmentHelper;
+import facens.worthit.helper.WebHelper;
+import facens.worthit.interfaces.OnGetDataTaskCompleted;
+import facens.worthit.interfaces.OnGetOnlyDataCompleted;
 import facens.worthit.model.CategoryOption;
 import facens.worthit.model.ProductOption;
+import facens.worthit.model.ReviewOption;
 import facens.worthit.model.UserOption;
 import facens.worthit.view.account.LoginFragment;
 import facens.worthit.view.account.ProfileFragment;
@@ -62,7 +75,29 @@ public class ProductFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_product, container, false);
 
-        ListView listView = (ListView) v.findViewById(R.id.list_category_product);
+        final ProductOption productOption = (ProductOption)getArguments().getSerializable("product");
+
+        //setando as configurações do que foi clicado.
+
+        ((TextView)v.findViewById(R.id.product_name_text)).setText(productOption.getName());
+        ((TextView)v.findViewById(R.id.product_price_text)).setText(productOption.getPriceToString());
+
+        WebHelper webHelper = new WebHelper();
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        Bitmap bitmap = webHelper.LoadImageFromWebOperations(webHelper.getUrl().concat("img/" + productOption.getImage()));
+
+        if(bitmap != null) {
+            ((ImageView) v.findViewById(R.id.product_image)).setImageBitmap(bitmap);
+        }
+        else{
+            ((ImageView)v.findViewById(R.id.product_image)).setImageResource(R.drawable.asus);
+        }
+
+
+        final ListView listView = (ListView) v.findViewById(R.id.list_category_product);
 
         //Floating Buttons
         moreButton = (FloatingActionButton) v.findViewById(R.id.more_button);
@@ -73,11 +108,40 @@ public class ProductFragment extends Fragment {
         fabRClockWise = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_clockwise);
         fabRAntiClockWise = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_anticlockwise);
 
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        FirebaseUser user = auth.getCurrentUser();
+
+        if(user != null){
+
+            moreButton.setClickable(true);
+            moreButton.setVisibility(View.VISIBLE);
+        }
+        else{
+            moreButton.setClickable(false);
+            moreButton.setVisibility(View.INVISIBLE);
+        }
+
         addReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                mFragmentHelper = new FragmentHelper(getFragmentManager(),createFragments(),1, R.id.frame_home, false, "");
+
+                final ReviewFragment reviewFragment = new ReviewFragment();
+
+                String productId = productOption.getId();
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("reviewId",productId);
+
+                reviewFragment.setArguments(bundle);
+
+                ArrayList fragments =  new ArrayList<Fragment>() {{
+                    add(new ProductFragment());
+                    add(reviewFragment);
+                }};
+
+                mFragmentHelper = new FragmentHelper(getFragmentManager(),fragments,1, R.id.frame_home, false, "");
 
             }
         });
@@ -104,14 +168,24 @@ public class ProductFragment extends Fragment {
             }
         });
 
+
+        mDataHelper.getCategoryOptions(getActivity(), new OnGetDataTaskCompleted<CategoryOption>() {
+            @Override
+            public void onTaskCompleted(ArrayList<CategoryOption> list, boolean error, String message) {
+
+                CategoryOptionsAdapter adapter = new CategoryOptionsAdapter(getActivity().getBaseContext(),list);
+
+                listView.setAdapter(adapter);
+
+            }
+        }, productOption.getId());
+
         //Opções do usuário
-        List<CategoryOption> categoryOptions = mDataHelper.getCategoryOptions();
+        //List<CategoryOption> categoryOptions = mDataHelper.getCategoryOptions();
 
         //Criando um adapter para a lista
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_list_item_1, userOptions);
-        CategoryOptionsAdapter adapter = new CategoryOptionsAdapter(getActivity().getBaseContext(),categoryOptions);
 
-        listView.setAdapter(adapter);
         return v;
 
     }
