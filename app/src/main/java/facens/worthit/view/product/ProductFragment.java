@@ -21,6 +21,9 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -105,6 +108,20 @@ public class ProductFragment extends Fragment {
         fabRClockWise = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_clockwise);
         fabRAntiClockWise = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_anticlockwise);
 
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        FirebaseUser user = auth.getCurrentUser();
+
+        if(user != null){
+
+            moreButton.setClickable(true);
+            moreButton.setVisibility(View.VISIBLE);
+        }
+        else{
+            moreButton.setClickable(false);
+            moreButton.setVisibility(View.INVISIBLE);
+        }
+
         addReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,6 +167,7 @@ public class ProductFragment extends Fragment {
                 }
             }
         });
+
 
         mDataHelper.getCategoryOptions(getActivity(), new OnGetDataTaskCompleted<CategoryOption>() {
             @Override

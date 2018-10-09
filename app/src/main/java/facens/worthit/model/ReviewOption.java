@@ -22,6 +22,16 @@ public class ReviewOption implements Serializable{
         return productId;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    private String category;
+
     public void setProductId(String productId) {
         this.productId = productId;
     }
