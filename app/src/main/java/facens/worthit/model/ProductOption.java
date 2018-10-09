@@ -14,6 +14,10 @@ public class ProductOption implements Serializable{
         this.rating = rating;
     }
 
+    public ProductOption(){
+
+    }
+
     public void setImage(String image){
         this.image = image;
     }

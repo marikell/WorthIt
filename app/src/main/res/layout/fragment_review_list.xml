@@ -9,7 +9,6 @@
     tools:context=".view.product.ReviewListFragment"
     >
 
-
         <SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"

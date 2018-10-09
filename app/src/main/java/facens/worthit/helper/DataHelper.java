@@ -15,6 +15,7 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -58,6 +59,55 @@ public class DataHelper {
             add(new UserOption("1", "Minhas Reviews", ImageType.MY_REVIEWS));
             add(new UserOption("2", "Logout", ImageType.LOGOUT));
         }};
+    }
+
+    public void getReviewsFromAuthor(Activity activity, String author, final OnGetDataTaskCompleted<ProductOption> taskCompleted){
+
+        final ArrayList<ProductOption> productOptions = new ArrayList<>();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+
+
+        WebHelper webHelper = new WebHelper();
+
+        String url = webHelper.getUrl() + "review" + "?author="+author;
+
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try{
+                    JSONArray productAttributes = response;
+
+                    for(int i = 0; i<productAttributes.length();i++){
+
+                        ProductOption productOption = new ProductOption();
+
+                        JSONObject jsonObject = productAttributes.getJSONObject(i);
+
+                        productOption.setId(jsonObject.getString("product_id"));
+                        productOption.setName(jsonObject.getString("name"));
+                        productOption.setImage(jsonObject.getString("image_id"));
+                        productOption.setPrice(Float.valueOf(jsonObject.getString("price")));
+                        productOption.setRating(Float.valueOf(jsonObject.getString("attributes_avg")));
+
+                        productOptions.add(productOption);
+                    }
+
+                    taskCompleted.onTaskCompleted(productOptions,false,null);
+                }
+                catch(Exception ex){
+                    taskCompleted.onTaskCompleted(productOptions,true,ex.getMessage());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                taskCompleted.onTaskCompleted(new ArrayList<ProductOption>(),true,error.getMessage());
+
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+
     }
 
     public void getReviewOption(Activity activity,String productId, final OnGetOnlyDataCompleted taskCompleted){

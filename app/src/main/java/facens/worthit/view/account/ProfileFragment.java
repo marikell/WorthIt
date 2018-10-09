@@ -26,6 +26,7 @@ import facens.worthit.helper.DataHelper;
 import facens.worthit.helper.FragmentHelper;
 import facens.worthit.model.ProductOption;
 import facens.worthit.model.UserOption;
+import facens.worthit.view.product.PersonalFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,7 +65,14 @@ public class ProfileFragment extends Fragment {
                 //MINHAS REVIEWS
                 if(option.getId() == "1"){
 
+                    final ArrayList<Fragment> fragments = new ArrayList<Fragment>() {{
+                        add(new LoginFragment());
+                        add(new RegisterFragment());
+                        add(new ProfileFragment());
+                        add(new PersonalFragment());
+                    }};
 
+                    FragmentHelper mFragmentHelper = new FragmentHelper(getFragmentManager(),fragments ,3, R.id.frame_account, false, "");
 
                 }
 
