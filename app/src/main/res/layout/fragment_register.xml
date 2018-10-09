@@ -58,7 +58,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtEmail"
+            android:id="@+id/txt_user_email"
             android:textColor="@color/colorText"
             android:textSize="20sp"
             android:inputType="textEmailAddress"
@@ -73,7 +73,7 @@
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtPassword"
+            android:id="@+id/txt_user_password"
             android:textColor="@color/colorText"
             android:textSize="20sp"
             android:drawablePadding="10dp"
@@ -86,7 +86,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtConfirmPassword"
+            android:id="@+id/txt_user_confirm_password"
             android:textColor="@color/colorText"
             android:textSize="20sp"
             android:inputType="textPassword"
@@ -98,7 +98,7 @@
         </EditText>
 
         <Button
-            android:id="@+id/register_button"
+            android:id="@+id/btnRegisterUser"
             style="@style/secondaryButton"
             android:layout_width="match_parent"
             android:layout_marginLeft="@dimen/form_field_margin"

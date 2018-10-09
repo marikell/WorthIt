@@ -27,16 +27,19 @@
                     android:layout_height="80dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/user_icon"/>
+                    android:background="@drawable/ic_person_black_24dp"/>
 
             </LinearLayout>
 
             <TextView
+                android:id="@+id/txtUserLogged"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="120dp"
                 android:fontFamily="@font/opensanscondlight"
+                android:layout_gravity="center"
                 android:lineSpacingExtra="8sp"
+                android:layout_marginBottom="10dp"
                 android:text="Marianne"
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
@@ -54,7 +57,6 @@
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/colorAccent"
                 android:textSize="30dp"></TextView>
-
 
         </LinearLayout>
 

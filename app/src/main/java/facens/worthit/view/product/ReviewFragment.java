@@ -1,12 +1,16 @@
 package facens.worthit.view.product;
 
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +19,11 @@ import facens.worthit.R;
 import facens.worthit.adapter.CategoryOptionsAdapter;
 import facens.worthit.adapter.UserOptionsAdapter;
 import facens.worthit.helper.DataHelper;
+import facens.worthit.helper.WebHelper;
+import facens.worthit.interfaces.OnGetDataTaskCompleted;
+import facens.worthit.interfaces.OnGetOnlyDataCompleted;
 import facens.worthit.model.CategoryOption;
+import facens.worthit.model.ReviewOption;
 import facens.worthit.model.UserOption;
 
 /**
@@ -35,19 +43,54 @@ public class ReviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=  inflater.inflate(R.layout.fragment_review, container, false);
+        final View v=  inflater.inflate(R.layout.fragment_review, container, false);
 
-        ListView listView = (ListView) v.findViewById(R.id.list_category_product_review);
+        String  reviewId = getArguments().getSerializable("reviewId").toString();
 
-        //Opções do usuário
-        List<CategoryOption> categoryOptions = new ArrayList<>();
+        DataHelper dataHelper = new DataHelper();
 
+
+        mDataHelper.getReviewOption(getActivity(), reviewId, new OnGetOnlyDataCompleted<ReviewOption>() {
+            @Override
+            public void onTaskCompleted(ReviewOption object, boolean error, String message) {
+
+                ((TextView) v.findViewById(R.id.review_product_name_text)).setText(object.getName());
+
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+
+                WebHelper webHelper = new WebHelper();
+
+                Bitmap bitmap = webHelper.LoadImageFromWebOperations(webHelper.getUrl().concat("img/" + object.getImage()));
+
+                if (bitmap != null) {
+                    ((ImageView) v.findViewById(R.id.review_image)).setImageBitmap(bitmap);
+                } else {
+                    ((ImageView) v.findViewById(R.id.review_image)).setImageResource(R.drawable.asus);
+                }
+
+                ListView listView = (ListView) v.findViewById(R.id.list_category_product_review);
+
+                List<CategoryOption> categoryOptions = new ArrayList<>();
+
+
+                for(int i = 0; i<object.getAttributes().size();i++){
+
+                    String attributeName = object.getAttributes().get(i);
+                    CategoryOption categoryOption = new CategoryOption((Integer.toString(i+1)), attributeName, 0);
+                    categoryOptions.add(categoryOption);
+                }
                 //mDataHelper.getCategoryOptions();
 
-        //Criando um adapter para a lista
-        CategoryOptionsAdapter adapter = new CategoryOptionsAdapter(getActivity().getBaseContext(),categoryOptions);
+                //Criando um adapter para a lista
+                CategoryOptionsAdapter adapter = new CategoryOptionsAdapter(getActivity().getBaseContext(),categoryOptions);
 
-        listView.setAdapter(adapter);
+                listView.setAdapter(adapter);
+
+            }
+        });
+
+
 
         return v;
     }

@@ -34,8 +34,10 @@ import facens.worthit.helper.DataHelper;
 import facens.worthit.helper.FragmentHelper;
 import facens.worthit.helper.WebHelper;
 import facens.worthit.interfaces.OnGetDataTaskCompleted;
+import facens.worthit.interfaces.OnGetOnlyDataCompleted;
 import facens.worthit.model.CategoryOption;
 import facens.worthit.model.ProductOption;
+import facens.worthit.model.ReviewOption;
 import facens.worthit.model.UserOption;
 import facens.worthit.view.account.LoginFragment;
 import facens.worthit.view.account.ProfileFragment;
@@ -70,7 +72,7 @@ public class ProductFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_product, container, false);
 
-        ProductOption productOption = (ProductOption)getArguments().getSerializable("product");
+        final ProductOption productOption = (ProductOption)getArguments().getSerializable("product");
 
         //setando as configurações do que foi clicado.
 
@@ -107,7 +109,22 @@ public class ProductFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                mFragmentHelper = new FragmentHelper(getFragmentManager(),createFragments(),1, R.id.frame_home, false, "");
+
+                final ReviewFragment reviewFragment = new ReviewFragment();
+
+                String productId = productOption.getId();
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("reviewId",productId);
+
+                reviewFragment.setArguments(bundle);
+
+                ArrayList fragments =  new ArrayList<Fragment>() {{
+                    add(new ProductFragment());
+                    add(reviewFragment);
+                }};
+
+                mFragmentHelper = new FragmentHelper(getFragmentManager(),fragments,1, R.id.frame_home, false, "");
 
             }
         });
