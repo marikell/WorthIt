@@ -14,7 +14,9 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.SearchView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        com.nostra13.universalimageloader.core.ImageLoader.getInstance().init(config);
 
         setContentView(R.layout.activity_main);
 

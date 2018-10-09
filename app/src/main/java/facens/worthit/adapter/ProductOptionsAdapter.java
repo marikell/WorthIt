@@ -3,6 +3,7 @@ package facens.worthit.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -13,6 +14,9 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,6 +119,18 @@ public class ProductOptionsAdapter  extends ArrayAdapter<ProductOption> {
         ((TextView)view.findViewById(R.id.product_price)).setText(productOption.getPriceToString());
         ((RatingBar)view.findViewById(R.id.ratingBar)).setRating(productOption.getRating());
 
+        String url = mWebHelper.getUrl().concat("img/" + productOption.getImage());
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+
+        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
+                .cacheOnDisk(true).resetViewBeforeLoading(true).showImageForEmptyUri(R.drawable.asus)
+                .showImageOnFail(R.drawable.asus).showImageOnLoading(R.drawable.asus).build();
+
+        imageLoader.displayImage(url, (ImageView)view.findViewById(R.id.img_product),options);
+
+        //((ImageView)view.findViewById(R.id.img_product)).setImageResource(R.drawable.asus);
+
         /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -124,7 +140,7 @@ public class ProductOptionsAdapter  extends ArrayAdapter<ProductOption> {
             ((ImageView)view.findViewById(R.id.img_product)).setImageBitmap(bitmap);
         }
         else{*/
-            ((ImageView)view.findViewById(R.id.img_product)).setImageResource(R.drawable.asus);
+
        // }
 
         return view;
