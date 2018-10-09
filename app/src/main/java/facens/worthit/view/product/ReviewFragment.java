@@ -141,7 +141,7 @@ public class ReviewFragment extends Fragment {
                                         @Override
                                         public void run() {
 
-                                            FragmentHelper mFragmentHelper = new FragmentHelper(getFragmentManager(),fragments ,1, R.id.frame_account, false, "");
+                                            //FragmentHelper mFragmentHelper = new FragmentHelper(getFragmentManager(),fragments ,1, R.id.frame_account, false, "");
 
 
                                         }
