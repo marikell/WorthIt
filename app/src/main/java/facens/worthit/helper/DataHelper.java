@@ -1,6 +1,7 @@
 package facens.worthit.helper;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -25,12 +26,16 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -52,6 +57,120 @@ public class DataHelper {
 
    public boolean isLoggedIn(){
        return true;
+   }
+
+   public String formatDataAsJSON(ReviewOption reviewOption) throws JSONException{
+       final JSONObject root = new JSONObject();
+
+       try{
+
+
+           root.put("product_id",reviewOption.getProductId());
+           root.put("name", reviewOption.getName());
+           root.put("category",reviewOption.getCategory());
+           root.put("image_id", reviewOption.getImage());
+
+           float[] ratings = reviewOption.getRatings();
+
+           for(int i = 0; i<ratings.length;i++){
+               float rating = ratings[i];
+               root.put("attribute_" + Integer.toString(i+1),String.valueOf(rating));
+           }
+           if(ratings.length<6){
+                        root.put("attribute_6","");
+           }
+
+               root.put("likes","0");
+                root.put("dislikes","0");
+
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+
+                FirebaseUser user = auth.getCurrentUser();
+
+                if(user != null){
+                    root.put("author",user.getEmail());
+                }
+
+                return root.toString(1);
+       }
+
+       catch(JSONException e){
+        Log.d("JWP","Não foi possível formatar o JSON");
+       }
+
+       return null;
+
+   }
+
+   public void sendSata(ReviewOption reviewOption) throws JSONException{
+
+       final String jsonData = formatDataAsJSON(reviewOption);
+
+       new AsyncTask<Void,Void,String>(){
+
+           @Override
+           protected void onPostExecute(String s) {
+               super.onPostExecute(s);
+           }
+
+           @Override
+           protected String doInBackground(Void... voids) {
+               return getServerResponse(jsonData, new WebHelper().getUrl()+"review");
+           }
+       }.execute();
+
+   }
+
+   private String getServerResponse(String json, String url){
+
+        WebHelper webHelper = new WebHelper();
+
+        try{
+            URL URL = new URL(url);
+
+            HttpURLConnection urlConnection = (HttpURLConnection)URL.openConnection();
+
+            urlConnection.setDoInput(true);
+            urlConnection.setDoInput(true);
+
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+
+            urlConnection.setRequestMethod("POST");
+
+            if(json != null){
+
+                OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
+
+                writer.write(json);
+
+                writer.flush();
+
+            }
+
+            int statusCode = urlConnection.getResponseCode();
+
+            if(statusCode == 200){
+
+                InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
+
+                return "success";
+                //String response = convertInputStreamToString(inputStream);
+
+                // From here you can convert the string to JSON with whatever JSON parser you like to use
+                // After converting the string to JSON, I call my custom callback. You can follow this process too, or you can implement the onPostExecute(Result) method
+            } else {
+
+                Log.e("error", "Erro ao realizar post.");
+                // Status code is not 200
+                // Do something to handle the error
+            }
+
+        }
+        catch(Exception ex){
+            Log.e("error", ex.getMessage());
+        }
+
+       return "error";
    }
 
     public ArrayList<UserOption> getUserOptions(){
@@ -265,10 +384,11 @@ return text;
 
         try{
 
-            String text = GetText(reviewOption);
+            sendSata(reviewOption);
+            //String text = GetText(reviewOption);
             taskCompleted.onTaskCompleted("",false,"");
         }
-        catch(UnsupportedEncodingException ex){
+        catch(Exception ex){
             taskCompleted.onTaskCompleted(ex.getMessage(),true,ex.getMessage());
         }
 

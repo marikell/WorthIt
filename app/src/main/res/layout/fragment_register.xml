@@ -32,32 +32,6 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtName"
-            android:textColor="@color/colorText"
-            android:textSize="20sp"
-            android:drawablePadding="10dp"
-            android:drawableLeft="@drawable/user_icon"
-            android:hint="Nome"
-            android:fontFamily="@font/opensanscondlight">
-
-        </EditText>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtUsername"
-            android:textColor="@color/colorText"
-            android:textSize="20sp"
-            android:drawablePadding="10dp"
-            android:drawableLeft="@drawable/user_icon"
-            android:hint="Usuário"
-            android:fontFamily="@font/opensanscondlight">
-
-        </EditText>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/txt_user_email"
             android:textColor="@color/colorText"
             android:textSize="20sp"
