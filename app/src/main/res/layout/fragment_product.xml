@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:layout_marginTop="5dp"
-            android:text="@string/product_name"
+            android:text=""
             android:textAlignment="center"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -30,7 +30,7 @@
             android:layout_height="180dp"
             android:layout_gravity="center"
             android:layout_marginBottom="25dp"
-            android:src="@drawable/asus" />
+            android:src="" />
 
 
             <TextView
@@ -65,7 +65,7 @@
             android:textColor="@color/colorAccent"
             android:layout_marginLeft="@dimen/product_margin"
             android:layout_marginRight="@dimen/product_margin"
-            android:text="@string/product_price"
+            android:text=""
             android:fontFamily="@font/opensanscondlight"/>
 
         <ListView
