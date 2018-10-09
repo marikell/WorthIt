@@ -17,7 +17,8 @@ android:orientation="vertical">
     android:text="@string/product_name"
     android:textAlignment="center"
     android:textSize="30sp"
-    android:textStyle="bold" />
+    android:textStyle="bold"
+    android:fontFamily="@font/opensanscondbold"/>
 
 <ImageView
     android:id="@+id/product_image"
@@ -41,7 +42,8 @@ android:orientation="vertical">
         android:text="@string/category_price"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:fontFamily="@font/opensanscondlight"/>
 
 
 </LinearLayout>
@@ -58,6 +60,7 @@ android:orientation="vertical">
         android:ems="10"
     android:layout_marginLeft="@dimen/product_margin"
     android:layout_marginRight="@dimen/product_margin"
+        android:fontFamily="@font/opensanscondlight"
     />
 
 <ListView

@@ -17,11 +17,11 @@
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/circle_container">
+            android:layout_marginBottom="20dp">
+            <!--android:background="@drawable/circle_container">-->
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="7dp"
                 android:foregroundTint="#424242"
@@ -37,7 +37,8 @@
             android:textSize="20sp"
             android:drawablePadding="10dp"
             android:drawableLeft="@drawable/user_icon"
-            android:hint="Nome">
+            android:hint="Nome"
+            android:fontFamily="@font/opensanscondlight">
 
         </EditText>
 
@@ -49,7 +50,8 @@
             android:textSize="20sp"
             android:drawablePadding="10dp"
             android:drawableLeft="@drawable/user_icon"
-            android:hint="Usuário">
+            android:hint="Usuário"
+            android:fontFamily="@font/opensanscondlight">
 
         </EditText>
 
@@ -62,7 +64,8 @@
             android:inputType="textEmailAddress"
             android:drawablePadding="10dp"
             android:drawableLeft="@drawable/ic_email_black_24dp"
-            android:hint="E-mail">
+            android:hint="E-mail"
+            android:fontFamily="@font/opensanscondlight">
 
         </EditText>
 
@@ -75,7 +78,8 @@
             android:textSize="20sp"
             android:drawablePadding="10dp"
             android:drawableLeft="@drawable/ic_vpn_key_black_24dp"
-            android:hint="Senha">
+            android:hint="Senha"
+            android:fontFamily="@font/opensanscondlight">
 
         </EditText>
 
@@ -88,7 +92,8 @@
             android:inputType="textPassword"
             android:drawablePadding="10dp"
             android:drawableLeft="@drawable/ic_vpn_key_black_24dp"
-            android:hint="Confirmar Senha">
+            android:hint="Confirmar Senha"
+            android:fontFamily="@font/opensanscondlight">
 
         </EditText>
 
@@ -101,7 +106,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="@string/action_register"
-            android:textStyle="bold">
+            android:textStyle="bold"
+            android:background="@drawable/botao_customizado">
         </Button>
     </LinearLayout>
 

@@ -15,7 +15,8 @@
         android:text="@string/category_01"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:fontFamily="@font/opensanscondlight"/>
 
     <RatingBar
         android:id="@+id/product_rating_review"

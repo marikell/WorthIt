@@ -11,7 +11,7 @@ import java.net.URL;
 public class WebHelper {
 
     public String getUrl(){
-        return "http://192.168.0.100:5000/";
+        return "http://192.168.2.9:5000/";
     }
 
     public Bitmap LoadImageFromWebOperations(String url) {
