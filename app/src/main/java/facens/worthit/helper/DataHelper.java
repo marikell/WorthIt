@@ -69,21 +69,21 @@ public class DataHelper {
            root.put("name", reviewOption.getName());
            root.put("category",reviewOption.getCategory());
            root.put("image_id", reviewOption.getImage());
-           root.put("cost", reviewOption.getPrice());
+           root.put("cost", String.valueOf(reviewOption.getPrice()));
 
 
            float[] ratings = reviewOption.getRatings();
 
            for(int i = 0; i<ratings.length;i++){
                float rating = ratings[i];
-               root.put("attribute_" + Integer.toString(i+1),rating);
+               root.put("attribute_" + Integer.toString(i+1),String.valueOf(rating));
            }
            if(ratings.length<6){
                         root.put("attribute_6","");
            }
 
-               root.put("likes",0);
-                root.put("dislikes",0);
+               root.put("likes","0");
+                root.put("dislikes","0");
 
                 FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -177,7 +177,7 @@ public class DataHelper {
 
     public ArrayList<UserOption> getUserOptions(){
         return new ArrayList<UserOption>(){{
-            add(new UserOption("1", "Minhas Reviews", ImageType.MY_REVIEWS));
+            //add(new UserOption("1", "Minhas Reviews", ImageType.MY_REVIEWS));
             add(new UserOption("2", "Logout", ImageType.LOGOUT));
         }};
     }
