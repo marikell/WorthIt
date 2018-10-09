@@ -8,6 +8,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.media.Rating;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -31,12 +32,17 @@ import facens.worthit.R;
 import facens.worthit.adapter.CategoryOptionsAdapter;
 import facens.worthit.adapter.UserOptionsAdapter;
 import facens.worthit.helper.DataHelper;
+import facens.worthit.helper.FragmentHelper;
 import facens.worthit.helper.WebHelper;
 import facens.worthit.interfaces.OnGetDataTaskCompleted;
 import facens.worthit.interfaces.OnGetOnlyDataCompleted;
 import facens.worthit.model.CategoryOption;
 import facens.worthit.model.ReviewOption;
 import facens.worthit.model.UserOption;
+import facens.worthit.view.account.LoginFragment;
+import facens.worthit.view.account.ProfileFragment;
+import facens.worthit.view.account.RegisterFragment;
+import facens.worthit.view.home.HomeFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -99,8 +105,8 @@ public class ReviewFragment extends Fragment {
 
                         ReviewOption reviewOption = new ReviewOption();
 
-                        String price = ((EditText)v.findViewById(R.id.product_price_text)).getText().toString();
-                        reviewOption.setPrice(Float.valueOf(price));
+                       float price = Float.valueOf( ((EditText)v.findViewById(R.id.product_price_text)).getText().toString());
+                        reviewOption.setPrice(price);
 
                         float[] ratings = new float[categoryOptions.size()];
 
@@ -123,6 +129,24 @@ public class ReviewFragment extends Fragment {
 
                                 if(object.equals("")){
                                     Toast.makeText(getActivity(), "Review realizada com sucesso.", Toast.LENGTH_SHORT).show();
+
+                                    Handler handler = new Handler();
+
+                                    final ArrayList<Fragment> fragments = new ArrayList<Fragment>() {{
+                                        add(new ReviewFragment());
+                                        add(new HomeFragment());
+                                    }};
+
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            FragmentHelper mFragmentHelper = new FragmentHelper(getFragmentManager(),fragments ,1, R.id.frame_account, false, "");
+
+
+                                        }
+                                    },1000);
+
                                 }
                                 else{
                                     Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
@@ -148,6 +172,8 @@ public class ReviewFragment extends Fragment {
         ratingBar.setId(id);
         ratingBar.setNumStars(5);
         ratingBar.setMax(5);
+        ratingBar.setScaleX(0.5f);
+        ratingBar.setScaleY(0.5f);
         ratingBar.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         ratingBar.setIsIndicator(false);
         LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();

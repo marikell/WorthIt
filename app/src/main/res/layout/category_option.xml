@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="60dp"
     android:orientation="vertical"
     android:layout_marginLeft="@dimen/product_margin"
     android:layout_marginBottom="20dp"
@@ -14,17 +14,16 @@
         android:layout_marginBottom="5dp"
         android:text="@string/category_01"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
+        android:textSize="12sp"
         android:textStyle="bold"
-        android:fontFamily="@font/opensanscondlight"/>
+       />
 
     <RatingBar
         android:id="@+id/product_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleX="0.75"
-        android:scaleY="0.75"
-        android:rating="3"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
         android:layout_gravity="center"
         android:theme="@style/CustomRatingBar"
         android:isIndicator="true"

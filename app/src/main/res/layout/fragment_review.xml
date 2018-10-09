@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
@@ -14,10 +14,10 @@ android:orientation="vertical">
     android:id="@+id/review_product_name_text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="15dp"
+    android:layout_marginBottom="5dp"
     android:text="@string/product_name"
     android:textAlignment="center"
-    android:textSize="30sp"
+    android:textSize="25sp"
     android:textStyle="bold"
     android:fontFamily="@font/opensanscondbold"/>
 
@@ -39,12 +39,12 @@ android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="3dp"
         android:text="@string/category_price"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:fontFamily="@font/opensanscondlight"/>
+        />
 
 
 </LinearLayout>
@@ -69,7 +69,9 @@ android:orientation="vertical">
         android:layout_marginLeft="@dimen/product_margin"
         android:layout_marginRight="@dimen/product_margin"
         android:id="@+id/review_attributes"
-        android:layout_height="wrap_content">
+        android:layout_height="465dp">
+
+
 
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton
@@ -85,10 +87,12 @@ android:orientation="vertical">
 
     </android.support.design.widget.FloatingActionButton>
 
-</LinearLayout>
-
-
-
 
 
 </LinearLayout>
+
+
+
+
+
+</RelativeLayout>
