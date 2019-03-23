@@ -137,15 +137,6 @@ public class ReviewFragment extends Fragment {
                                         add(new HomeFragment());
                                     }};
 
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-
-                                            //FragmentHelper mFragmentHelper = new FragmentHelper(getFragmentManager(),fragments ,1, R.id.frame_account, false, "");
-
-
-                                        }
-                                    },1000);
 
                                 }
                                 else{

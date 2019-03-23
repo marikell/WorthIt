@@ -42,7 +42,7 @@ android:orientation="vertical">
         android:layout_marginBottom="3dp"
         android:text="@string/category_price"
         android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         />
 
@@ -55,7 +55,7 @@ android:orientation="vertical">
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_monetization_on_black_24dp"
-    android:textSize="20sp"
+    android:textSize="16sp"
         android:inputType="numberDecimal"
         android:ems="10"
     android:layout_marginLeft="@dimen/product_margin"
@@ -69,7 +69,7 @@ android:orientation="vertical">
         android:layout_marginLeft="@dimen/product_margin"
         android:layout_marginRight="@dimen/product_margin"
         android:id="@+id/review_attributes"
-        android:layout_height="465dp">
+        android:layout_height="450dp">
 
 
 
